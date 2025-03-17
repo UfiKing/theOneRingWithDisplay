@@ -103,8 +103,19 @@ void create_screen_main() {
         }
         {
             lv_obj_t *obj = lv_switch_create(parent_obj);
-            lv_obj_set_pos(obj, 251, 9);
+            lv_obj_set_pos(obj, 251, 143);
             lv_obj_set_size(obj, 50, 25);
+        }
+        {
+            // WiFi Bli
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            objects.wi_fi_bli = obj;
+            lv_obj_set_pos(obj, 269, 7);
+            lv_obj_set_size(obj, 32, 27);
+            lv_label_set_text(obj, "Text");
+            lv_obj_set_style_text_color(obj, lv_color_hex(0xffffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_AUTO, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
     }
     

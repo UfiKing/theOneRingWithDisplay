@@ -13,6 +13,7 @@ typedef struct _objects_t {
     lv_obj_t *img_m_hand;
     lv_obj_t *img_s_hand;
     lv_obj_t *b1;
+    lv_obj_t *wi_fi_bli;
 } objects_t;
 
 extern objects_t objects;
