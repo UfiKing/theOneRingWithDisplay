@@ -22,7 +22,6 @@
           },
           {
             "type": "border",
-            "selected": 2,
             "size": 240,
             "location": "right",
             "children": [
@@ -187,7 +186,7 @@
             {
               "type": "tabset",
               "id": "EDITORS",
-              "weight": 65,
+              "weight": 56.23076923076923,
               "selected": 1,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
@@ -215,12 +214,13 @@
                   },
                   "icon": "svg:page"
                 }
-              ]
+              ],
+              "active": true
             },
             {
               "type": "row",
               "id": "#5c254ded-4289-42df-ae2f-7a5dbbb93220",
-              "weight": 20,
+              "weight": 28.76923076923077,
               "children": [
                 {
                   "type": "tabset",
@@ -235,8 +235,7 @@
                       "enableClose": false,
                       "icon": "svg:properties"
                     }
-                  ],
-                  "active": true
+                  ]
                 },
                 {
                   "type": "tabset",
@@ -986,20 +985,44 @@
       "selection": {
         "0": {
           "0": {
-            "0": {},
-            "$selected": true
+            "0": {}
           },
           "1": {
             "0": {}
-          }
+          },
+          "2": {}
         }
       },
       "transform": {
         "translate": {
-          "x": -808.9756412741492,
-          "y": -623.925825418363
+          "x": -123.12398569695527,
+          "y": -69.3564557188082
         },
-        "scale": 5
+        "scale": 1.25
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[EEZ Studio LVGL Test.eez-project]:/userPages/1[flow-state]": {
+      "selection": {
+        "0": {
+          "3": {},
+          "4": {
+            "$selected": true
+          },
+          "6": {}
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -180.10010223388682,
+          "y": -120
+        },
+        "scale": 1.25
       },
       "timeline": {
         "isEditorActive": false,
@@ -1024,11 +1047,10 @@
   "lvglPart": "MAIN",
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
-    "POSITION AND SIZE",
-    "BACKGROUND"
+    "TEXT"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
-  "flowZoom": 5,
+  "flowZoom": 1.25,
   "implementationLanguage": "C"
 }

@@ -169,8 +169,8 @@
                 {
                   "objID": "8e67f148-6239-4b46-bd80-77fab39dbf6e",
                   "type": "LVGLImageWidget",
-                  "left": 9,
-                  "top": 1,
+                  "left": -5,
+                  "top": 2,
                   "width": 230,
                   "height": 230,
                   "customInputs": [],
@@ -448,7 +448,7 @@
             {
               "objID": "d664b5f4-fcf7-4b98-89a2-d98aaa005973",
               "type": "LVGLButtonWidget",
-              "left": 251,
+              "left": 260,
               "top": 181,
               "width": 50,
               "height": 50,
@@ -541,7 +541,7 @@
             {
               "objID": "a6cf87dd-4834-4f9c-e64b-225a1bf775f6",
               "type": "LVGLLabelWidget",
-              "left": 260,
+              "left": 269,
               "top": 4,
               "width": 33,
               "height": 16,
