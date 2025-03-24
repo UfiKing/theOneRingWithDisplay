@@ -3,23 +3,8 @@
 
 #include <lvgl.h>
 #include <TFT_eSPI.h>
-#include <XPT2046_Touchscreen.h>
+#include "touch_display.h"
 #include "ui/ui.h"
-
-// Touch Screen pins
-// ----------------------------
-
-// The CYD touch uses some non default
-// SPI pins
-
-#define XPT2046_IRQ 36
-#define XPT2046_MOSI 32
-#define XPT2046_MISO 39
-#define XPT2046_CLK 25
-#define XPT2046_CS 33
-SPIClass touchscreenSpi = SPIClass(VSPI);
-XPT2046_Touchscreen touchscreen(XPT2046_CS, XPT2046_IRQ);
-uint16_t touchScreenMinimumX = 200, touchScreenMaximumX = 3700, touchScreenMinimumY = 240, touchScreenMaximumY = 3800;
 
 /*Set to your screen resolution*/
 #define TFT_HOR_RES 240
@@ -43,37 +28,6 @@ void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
     /*Call it to tell LVGL you are ready*/
     lv_disp_flush_ready(disp);
 }
-/*Read the touchpad*/
-void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
-{
-    if (touchscreen.touched())
-    {
-        TS_Point p = touchscreen.getPoint();
-        // Some very basic auto calibration so it doesn't go out of range
-        if (p.x < touchScreenMinimumX)
-            touchScreenMinimumX = p.x;
-        if (p.x > touchScreenMaximumX)
-            touchScreenMaximumX = p.x;
-        if (p.y < touchScreenMinimumY)
-            touchScreenMinimumY = p.y;
-        if (p.y > touchScreenMaximumY)
-            touchScreenMaximumY = p.y;
-        // Map this to the pixel position
-        data->point.x = map(p.x, touchScreenMinimumX, touchScreenMaximumX, 1, TFT_HOR_RES); /* Touchscreen X calibration */
-        data->point.y = map(p.y, touchScreenMinimumY, touchScreenMaximumY, 1, TFT_VER_RES); /* Touchscreen Y calibration */
-        data->state = LV_INDEV_STATE_PRESSED;
-        /*
-        Serial.print("Touch x ");
-        Serial.print(data->point.x);
-        Serial.print(" y ");
-        Serial.println(data->point.y);
-        */
-    }
-    else
-    {
-        data->state = LV_INDEV_STATE_RELEASED;
-    }
-}
 
 lv_indev_t *indev;     // Touchscreen input device
 uint8_t *draw_buf;     // draw_buf is allocated on heap otherwise the static area is too big on ESP32 at compile
@@ -88,10 +42,7 @@ void setup()
     Serial.begin(115200);
     Serial.println(LVGL_Arduino);
 
-    // Initialise the touchscreen
-    touchscreenSpi.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS); /* Start second SPI bus for touchscreen */
-    touchscreen.begin(touchscreenSpi);                                         /* Touchscreen init */
-    touchscreen.setRotation(2);                                                /* Inverted landscape orientation to match screen */
+    touch_setup();
 
     // Initialise LVGL
     lv_init();
@@ -209,6 +160,5 @@ void loop()
     lv_tick_inc(millis() - lastTick); // Update the tick timer. Tick is new for LVGL 9
     lastTick = millis();
     lv_timer_handler(); // Update the UI
-    Serial.print(".");
     delay(5);
 }

@@ -995,10 +995,10 @@
       },
       "transform": {
         "translate": {
-          "x": -123.12398569695527,
-          "y": -69.3564557188082
+          "x": -131.24878283634632,
+          "y": -106.46107549110984
         },
-        "scale": 1.25
+        "scale": 1.5
       },
       "timeline": {
         "isEditorActive": false,
@@ -1011,9 +1011,7 @@
       "selection": {
         "0": {
           "3": {},
-          "4": {
-            "$selected": true
-          },
+          "4": {},
           "6": {}
         }
       },
@@ -1051,6 +1049,6 @@
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
-  "flowZoom": 1.25,
+  "flowZoom": 1.5,
   "implementationLanguage": "C"
 }
