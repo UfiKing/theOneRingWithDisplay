@@ -3,10 +3,10 @@
 #include <lvgl.h>
 #include "c_touch\CST820.h"
 
+#ifdef RESISTIVE_TOUCH
 // Touch Screen pins
 // ----------------------------
 // The CYD touch uses some non default SPI pins
-#ifdef RESISTIVE_TOUCH
 #define XPT2046_IRQ 36
 #define XPT2046_MOSI 32
 #define XPT2046_MISO 39
@@ -86,10 +86,10 @@ void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
     // Serial.print(" y ");
     // Serial.println(data->point.y);
     return;
-#endif
-
+    
     data->state = LV_INDEV_STATE_RELEASED;
 }
+#endif
 
 
 void touch_setup()

@@ -169,7 +169,7 @@
                 {
                   "objID": "8e67f148-6239-4b46-bd80-77fab39dbf6e",
                   "type": "LVGLImageWidget",
-                  "left": 0,
+                  "left": 2,
                   "top": 2,
                   "width": 230,
                   "height": 230,
@@ -215,7 +215,7 @@
                 {
                   "objID": "578d6d8a-02cd-4e7e-b195-88101f09f7a7",
                   "type": "LVGLImageWidget",
-                  "left": 110,
+                  "left": 109,
                   "top": 56,
                   "width": 15,
                   "height": 64,
@@ -271,7 +271,7 @@
                 {
                   "objID": "7b51d4f5-e768-4866-ccf0-2190e890f9c3",
                   "type": "LVGLImageWidget",
-                  "left": 111,
+                  "left": 110,
                   "top": 38,
                   "width": 13,
                   "height": 82,
@@ -327,7 +327,7 @@
                 {
                   "objID": "9d443073-82fa-4906-bdaf-70a8ac68d963",
                   "type": "LVGLImageWidget",
-                  "left": 114,
+                  "left": 113,
                   "top": 30,
                   "width": 7,
                   "height": 90,
@@ -365,8 +365,8 @@
                       "MAIN": {
                         "DEFAULT": {
                           "transform_pivot_x": 3,
-                          "transform_pivot_y": 90,
-                          "transform_rotation": 1600
+                          "transform_pivot_y": 91,
+                          "transform_rotation": 1800
                         }
                       }
                     }
@@ -384,7 +384,7 @@
                 {
                   "objID": "76f9fb92-1a30-470e-9150-0bb5f9649c5a",
                   "type": "LVGLImageWidget",
-                  "left": 110,
+                  "left": 109,
                   "top": 113,
                   "width": 15,
                   "height": 15,
@@ -541,7 +541,7 @@
             {
               "objID": "a6cf87dd-4834-4f9c-e64b-225a1bf775f6",
               "type": "LVGLLabelWidget",
-              "left": 269,
+              "left": 285,
               "top": 4,
               "width": 33,
               "height": 16,

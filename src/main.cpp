@@ -1,21 +1,21 @@
 #include <Arduino.h>
 #include <WiFi.h>
+#include "wifi_settings.h"
 
 #include <lvgl.h>
 #include <TFT_eSPI.h>
 #include "touch_display.h"
 #include "ui/ui.h"
 
-/*Set to your screen resolution*/
-#define TFT_HOR_RES 240
-#define TFT_VER_RES 320
+/* Get screen resolution from platformio.ini */
+// #define TFT_HOR_RES 240
+// #define TFT_VER_RES 320
 
 /*LVGL draw into this buffer, 1/10 screen size usually works well. The size is in bytes*/
 #define DRAW_BUF_SIZE (TFT_HOR_RES * TFT_VER_RES / 10 * (LV_COLOR_DEPTH / 8))
 
 #if LV_USE_LOG != 0
-void my_print(lv_log_level_t level, const char *buf)
-{
+void my_print(lv_log_level_t level, const char *buf) {
     LV_UNUSED(level);
     Serial.println(buf);
     Serial.flush();
@@ -23,9 +23,7 @@ void my_print(lv_log_level_t level, const char *buf)
 #endif
 
 /* LVGL calls it when a rendered image needs to copied to the display*/
-void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
-{
-    /*Call it to tell LVGL you are ready*/
+void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map) {
     lv_disp_flush_ready(disp);
 }
 
@@ -33,21 +31,18 @@ lv_indev_t *indev;     // Touchscreen input device
 uint8_t *draw_buf;     // draw_buf is allocated on heap otherwise the static area is too big on ESP32 at compile
 uint32_t lastTick = 0; // Used to track the tick timer
 
-void setup()
-{
-    // Some basic info on the Serial console
-    String LVGL_Arduino = "LVGL demo ";
-    LVGL_Arduino += String('V') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
-
+void setup() {
     Serial.begin(115200);
-    Serial.println(LVGL_Arduino);
+    Serial.printf("LVGL demo V%d.%d.%d\n", lv_version_major(), lv_version_minor(), lv_version_patch());
+
+    wifi_setup(); // Initialize WiFi
 
     touch_setup();
 
-    // Initialise LVGL
+    // Initialize LVGL
     lv_init();
-    draw_buf = new uint8_t[DRAW_BUF_SIZE];
     lv_display_t *disp;
+    draw_buf = new uint8_t[DRAW_BUF_SIZE];
     disp = lv_tft_espi_create(TFT_HOR_RES, TFT_VER_RES, draw_buf, DRAW_BUF_SIZE);
 
     // Initialize the XPT2046 input device driver
@@ -56,12 +51,13 @@ void setup()
     lv_indev_set_read_cb(indev, my_touchpad_read);
 
     lv_display_set_rotation(disp, LV_DISP_ROTATION_270); // Use landscape mode
-    // Done
+
     Serial.println("Setup done");
     ui_init();
+    fix_wifi_ui_textarea(); // fix nastavitve ui
 
     timeval tv;
-    tv.tv_sec = 1742130636;
+    tv.tv_sec = 1743283672;
     tv.tv_usec = 0;
     settimeofday(&tv, 0); // Set time to 0
     delay(1000);
@@ -72,13 +68,11 @@ void setup()
     lv_label_set_text(objects.b1_label, LV_SYMBOL_SETTINGS);
 
     // Nastavimo event pritiska na B1 in sicer na menjavo zaslona nastavitve
-    lv_obj_add_event_cb(objects.b1, [](lv_event_t *event)
-                        {
+    lv_obj_add_event_cb(objects.b1, [](lv_event_t *event) {
         // Pritisnjen je bil gumb B1, naredimo menjavo zaslona
         lv_scr_load(objects.nastavitve); }, LV_EVENT_CLICKED, NULL);
 
-    lv_obj_add_event_cb(objects.b_back, [](lv_event_t *event)
-                        {
+    lv_obj_add_event_cb(objects.b_back, [](lv_event_t *event) {
         // Pritisnjen je bil gumb BACK, naredimo menjavo zaslona
         lv_screen_load(objects.main); }, LV_EVENT_CLICKED, NULL);
 
@@ -86,14 +80,11 @@ void setup()
     lv_keyboard_set_textarea(objects.kbd, objects.tb_ssid_text);
 
     // klik na polje za vnos prestavi vnos s tipkovnice na to polje
-    lv_obj_add_event_cb(objects.tb_ssid_text, [](lv_event_t *event)
-                        { lv_keyboard_set_textarea(objects.kbd, objects.tb_ssid_text); }, LV_EVENT_CLICKED, NULL);
-    lv_obj_add_event_cb(objects.tb_ssid_pass, [](lv_event_t *event)
-                        { lv_keyboard_set_textarea(objects.kbd, objects.tb_ssid_pass); }, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(objects.tb_ssid_text, [](lv_event_t *event) { lv_keyboard_set_textarea(objects.kbd, objects.tb_ssid_text); }, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(objects.tb_ssid_pass, [](lv_event_t *event) { lv_keyboard_set_textarea(objects.kbd, objects.tb_ssid_pass); }, LV_EVENT_CLICKED, NULL);
 
     // gumb b_connect povežemo z funkcijo, ki bo poskusila povezati na SSID
-    lv_obj_add_event_cb(objects.b_connect, [](lv_event_t *event)
-                        {
+    lv_obj_add_event_cb(objects.b_connect, [](lv_event_t *event) {
         // Pritisnjen je bil gumb B1, naredimo menjavo zaslona
         Serial.println("Pritisnjen gumb connect");
         // Pridobimo vsebino polja za SSID
@@ -110,37 +101,28 @@ tm tm_info;
 int prev_sec = 0;
 bool wifi_flag_visible = false;
 
-void loop()
-{
+void loop() {
     // blink wifi icon, if not connected
     bool new_wifi_flag_visible;
-    if (WiFi.isConnected() != WL_CONNECTED)
-    {
+    if (WiFi.isConnected() != WL_CONNECTED) {
         new_wifi_flag_visible = (millis() % 1000 < 500);
-    }
-    else if (WiFi.isConnected() == WL_CONNECTED)
-    {
+    } else if (WiFi.isConnected() == WL_CONNECTED) {
         wifi_flag_visible = true;
         new_wifi_flag_visible = true;
         lv_obj_remove_flag(objects.wi_fi_bli, LV_OBJ_FLAG_HIDDEN);
     }
-    if (wifi_flag_visible != new_wifi_flag_visible)
-    {
+    if (wifi_flag_visible != new_wifi_flag_visible) {
         wifi_flag_visible = new_wifi_flag_visible;
-        if (wifi_flag_visible)
-        {
+        if (wifi_flag_visible) {
             lv_obj_add_flag(objects.wi_fi_bli, LV_OBJ_FLAG_HIDDEN);
-        }
-        else
-        {
+        } else {
             lv_obj_remove_flag(objects.wi_fi_bli, LV_OBJ_FLAG_HIDDEN);
         }
     }
 
     // get current time as tm struct
     getLocalTime(&tm_info);
-    if (prev_sec != tm_info.tm_sec)
-    {
+    if (prev_sec != tm_info.tm_sec) {
         // calculate degrees for each hand
         double h_deg = (tm_info.tm_hour % 12) * 30 + tm_info.tm_min * 0.5;
         double m_deg = tm_info.tm_min * 6 + tm_info.tm_sec * 0.1;

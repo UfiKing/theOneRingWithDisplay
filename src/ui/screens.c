@@ -38,7 +38,7 @@ void create_screen_main() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_img_create(parent_obj);
-                    lv_obj_set_pos(obj, -5, 2);
+                    lv_obj_set_pos(obj, 2, 2);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_img_set_src(obj, &img_analog_clock_template);
                 }
@@ -46,7 +46,7 @@ void create_screen_main() {
                     // img_h_hand
                     lv_obj_t *obj = lv_img_create(parent_obj);
                     objects.img_h_hand = obj;
-                    lv_obj_set_pos(obj, 110, 56);
+                    lv_obj_set_pos(obj, 109, 56);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_img_set_src(obj, &img_hour_hand);
                     lv_image_set_inner_align(obj, LV_IMAGE_ALIGN_TOP_RIGHT);
@@ -58,7 +58,7 @@ void create_screen_main() {
                     // img_m_hand
                     lv_obj_t *obj = lv_img_create(parent_obj);
                     objects.img_m_hand = obj;
-                    lv_obj_set_pos(obj, 111, 38);
+                    lv_obj_set_pos(obj, 110, 38);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_img_set_src(obj, &img_minute_hand);
                     lv_obj_set_style_transform_pivot_x(obj, 6, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -69,16 +69,16 @@ void create_screen_main() {
                     // img_s_hand
                     lv_obj_t *obj = lv_img_create(parent_obj);
                     objects.img_s_hand = obj;
-                    lv_obj_set_pos(obj, 114, 30);
+                    lv_obj_set_pos(obj, 113, 30);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_img_set_src(obj, &img_second_hand);
                     lv_obj_set_style_transform_pivot_x(obj, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_transform_pivot_y(obj, 90, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_transform_rotation(obj, 1600, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_transform_pivot_y(obj, 91, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_transform_rotation(obj, 1800, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
                     lv_obj_t *obj = lv_img_create(parent_obj);
-                    lv_obj_set_pos(obj, 110, 113);
+                    lv_obj_set_pos(obj, 109, 113);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_img_set_src(obj, &img_analog_middle_template);
                 }
@@ -107,7 +107,7 @@ void create_screen_main() {
             // wi_fi_bli
             lv_obj_t *obj = lv_label_create(parent_obj);
             objects.wi_fi_bli = obj;
-            lv_obj_set_pos(obj, 269, 4);
+            lv_obj_set_pos(obj, 285, 4);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_long_mode(obj, LV_LABEL_LONG_CLIP);
             lv_label_set_text(obj, "WIFI");
