@@ -86,10 +86,11 @@ void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
     // Serial.print(" y ");
     // Serial.println(data->point.y);
     return;
+    #endif
     
+    // if no touch defined, set state to released
     data->state = LV_INDEV_STATE_RELEASED;
 }
-#endif
 
 
 void touch_setup()

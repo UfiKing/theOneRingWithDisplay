@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[EEZ Studio LVGL Test.eez-project]:/userPages/0",
+    "selectedUserPageObject": "[EEZ Studio LVGL Test.eez-project]:/userPages/1",
     "selectedBitmapObject": "[EEZ Studio LVGL Test.eez-project]:/bitmaps/4",
     "subnavigationSelectedItems": {}
   },
@@ -206,10 +206,10 @@
                 {
                   "type": "tab",
                   "id": "#fb66f273-14ec-4444-a306-7c2e5b633a3a",
-                  "name": "Main",
+                  "name": "Nastavitve",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[EEZ Studio LVGL Test.eez-project]:/userPages/0",
+                    "objectPath": "[EEZ Studio LVGL Test.eez-project]:/userPages/1",
                     "permanent": false
                   },
                   "icon": "svg:page"
@@ -985,7 +985,8 @@
       "selection": {
         "0": {
           "0": {
-            "0": {}
+            "0": {},
+            "3": {}
           },
           "1": {
             "0": {}
@@ -995,10 +996,10 @@
       },
       "transform": {
         "translate": {
-          "x": -131.24878283634632,
-          "y": -106.46107549110984
+          "x": -315.17654282248196,
+          "y": -261.4470305804212
         },
-        "scale": 1.5
+        "scale": 2.5
       },
       "timeline": {
         "isEditorActive": false,
@@ -1020,7 +1021,7 @@
           "x": -180.10010223388682,
           "y": -120
         },
-        "scale": 1.25
+        "scale": 2.5
       },
       "timeline": {
         "isEditorActive": false,
@@ -1045,10 +1046,10 @@
   "lvglPart": "MAIN",
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
-    "TEXT"
+    "POSITION AND SIZE"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
-  "flowZoom": 1.5,
+  "flowZoom": 2.5,
   "implementationLanguage": "C"
 }

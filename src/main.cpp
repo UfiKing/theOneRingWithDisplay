@@ -6,6 +6,7 @@
 #include <TFT_eSPI.h>
 #include "touch_display.h"
 #include "ui/ui.h"
+#include "setup_ntp_time.h"
 
 /* Get screen resolution from platformio.ini */
 // #define TFT_HOR_RES 240
@@ -33,13 +34,18 @@ uint32_t lastTick = 0; // Used to track the tick timer
 
 void setup() {
     Serial.begin(115200);
+
+    // če imamo rdečo led, jo nastavimo na izhod
+#ifdef LED_R
+    pinMode(LED_R, OUTPUT);
+    digitalWrite(LED_R, HIGH); // turn off LED - LED is active when LOW
+#endif
     Serial.printf("LVGL demo V%d.%d.%d\n", lv_version_major(), lv_version_minor(), lv_version_patch());
 
-    wifi_setup(); // Initialize WiFi
+    wifi_setup();  // Inicializiramo WiFi povezavo - klic funkcije iz wifi_settings.h
+    touch_setup(); // Inicializiramo dotik - klic funkcije iz touch_display.h
 
-    touch_setup();
-
-    // Initialize LVGL
+    // Initialize LVGL - this must be done before any LVGL function calls
     lv_init();
     lv_display_t *disp;
     draw_buf = new uint8_t[DRAW_BUF_SIZE];
@@ -49,23 +55,20 @@ void setup() {
     indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
     lv_indev_set_read_cb(indev, my_touchpad_read);
-
     lv_display_set_rotation(disp, LV_DISP_ROTATION_270); // Use landscape mode
-
     Serial.println("Setup done");
-    ui_init();
+
+    ui_init();              // inicializiramo uporabniški vmesnik, narejen z EEZ Studio
     fix_wifi_ui_textarea(); // fix nastavitve ui
+    setup_ntp_time();       // kliči setup_ntp_time() iz setup_ntp_time.h
 
-    timeval tv;
-    tv.tv_sec = 1743283672;
-    tv.tv_usec = 0;
-    settimeofday(&tv, 0); // Set time to 0
-    delay(1000);
+    // Vse te nastavitve spodaj lahko nastavite že v EEZ Studio, če uporabite "flow" način
+    //  Nastavimo oznake - labele na simbole
+    // lv_label_set_text(objects.wi_fi_bli, LV_SYMBOL_WIFI); // v eez studio nastavimo na simbol wifi tako, da v polje vnesemo  \uf1eb (unicode kodo simbola LV_SYMBOL_WIFI)
+    lv_label_set_text(objects.b1_label, LV_SYMBOL_SETTINGS); // za demo sta prikazana oba načina
 
-    // Vse te nastavitve spodaj lahko nastavite že v EEZ Studio, če uporabite "flow"
-    //  Nastavimo oznake na simbole
-    lv_label_set_text(objects.wi_fi_bli, LV_SYMBOL_WIFI);
-    lv_label_set_text(objects.b1_label, LV_SYMBOL_SETTINGS);
+    // še postavimo wifi na rdečo barvo
+    lv_obj_set_style_text_color(objects.wi_fi_bli, lv_color_hex(0xFF0000), 0); // nastavimo barvo besedila na rdečo
 
     // Nastavimo event pritiska na B1 in sicer na menjavo zaslona nastavitve
     lv_obj_add_event_cb(objects.b1, [](lv_event_t *event) {
@@ -79,22 +82,22 @@ void setup() {
     // tipkovnico na drugem zaslonu nastavimo, da vnaša v polje za SSID
     lv_keyboard_set_textarea(objects.kbd, objects.tb_ssid_text);
 
-    // klik na polje za vnos prestavi vnos s tipkovnice na to polje
+    // klik na polje za vnos prestavi vnos s tipkovnice na to polje - dodamo povratni klic - ker je kratek, kar anonimno lambda funkcijo
     lv_obj_add_event_cb(objects.tb_ssid_text, [](lv_event_t *event) { lv_keyboard_set_textarea(objects.kbd, objects.tb_ssid_text); }, LV_EVENT_CLICKED, NULL);
     lv_obj_add_event_cb(objects.tb_ssid_pass, [](lv_event_t *event) { lv_keyboard_set_textarea(objects.kbd, objects.tb_ssid_pass); }, LV_EVENT_CLICKED, NULL);
 
     // gumb b_connect povežemo z funkcijo, ki bo poskusila povezati na SSID
     lv_obj_add_event_cb(objects.b_connect, [](lv_event_t *event) {
-        // Pritisnjen je bil gumb B1, naredimo menjavo zaslona
+        // Pritisnjen je bil gumb b_connect na ekranu nastavitve, naredimo menjavo zaslona
         Serial.println("Pritisnjen gumb connect");
         // Pridobimo vsebino polja za SSID
         const char * ssid = lv_textarea_get_text(objects.tb_ssid_text);
         const char * pass = lv_textarea_get_text(objects.tb_ssid_pass);
-        Serial.print("Povezujem se na SSID: ");
-        Serial.println(ssid);
-        Serial.print("Z geslom: ");
-        Serial.println(pass);
+
+        Serial.printf("Povezujem se na SSID: %s z geslom: %s\n", ssid, pass);
         WiFi.begin(ssid, pass); }, LV_EVENT_CLICKED, NULL);
+
+    // tu pride še shranjevanje nastavitev v Preferences
 }
 
 tm tm_info;
@@ -102,21 +105,32 @@ int prev_sec = 0;
 bool wifi_flag_visible = false;
 
 void loop() {
-    // blink wifi icon, if not connected
+    // blink wifi icon, if wifi not connected
     bool new_wifi_flag_visible;
-    if (WiFi.isConnected() != WL_CONNECTED) {
+    if (!WiFi.isConnected()) {
         new_wifi_flag_visible = (millis() % 1000 < 500);
-    } else if (WiFi.isConnected() == WL_CONNECTED) {
+    } else if (WiFi.isConnected()) {
         wifi_flag_visible = true;
         new_wifi_flag_visible = true;
         lv_obj_remove_flag(objects.wi_fi_bli, LV_OBJ_FLAG_HIDDEN);
+        // make it green
+        lv_obj_set_style_text_color(objects.wi_fi_bli, lv_color_hex(0x00FF00), 0); // nastavimo barvo besedila na zeleno
     }
     if (wifi_flag_visible != new_wifi_flag_visible) {
         wifi_flag_visible = new_wifi_flag_visible;
         if (wifi_flag_visible) {
             lv_obj_add_flag(objects.wi_fi_bli, LV_OBJ_FLAG_HIDDEN);
+#ifdef LED_R
+            // utripamo z rdečo diodo, ampak tako močno
+            analogWrite(LED_R, 255); // turn on LED
+#endif
+
         } else {
             lv_obj_remove_flag(objects.wi_fi_bli, LV_OBJ_FLAG_HIDDEN);
+#ifdef LED_R
+            // utripamo z rdečo diodo, ampak tako močno
+            analogWrite(LED_R, 192); // turn on LED
+#endif
         }
     }
 

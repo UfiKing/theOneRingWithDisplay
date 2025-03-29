@@ -364,8 +364,8 @@
                     "definition": {
                       "MAIN": {
                         "DEFAULT": {
-                          "transform_pivot_x": 3,
-                          "transform_pivot_y": 91,
+                          "transform_pivot_x": 3.5,
+                          "transform_pivot_y": 90,
                           "transform_rotation": 1800
                         }
                       }
@@ -474,7 +474,7 @@
                   "type": "LVGLLabelWidget",
                   "left": 0,
                   "top": 0,
-                  "width": 16,
+                  "width": 14,
                   "height": 16,
                   "customInputs": [],
                   "customOutputs": [],
@@ -515,7 +515,7 @@
                   },
                   "group": "",
                   "groupIndex": 0,
-                  "text": "B1",
+                  "text": "\\uf013",
                   "textType": "literal",
                   "longMode": "WRAP",
                   "recolor": false
@@ -541,9 +541,9 @@
             {
               "objID": "a6cf87dd-4834-4f9c-e64b-225a1bf775f6",
               "type": "LVGLLabelWidget",
-              "left": 285,
+              "left": 293,
               "top": 4,
-              "width": 33,
+              "width": 18,
               "height": 16,
               "customInputs": [],
               "customOutputs": [],
@@ -584,7 +584,7 @@
               },
               "group": "",
               "groupIndex": 0,
-              "text": "WIFI",
+              "text": "\\uf1eb",
               "textType": "literal",
               "longMode": "CLIP",
               "recolor": false

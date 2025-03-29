@@ -72,8 +72,8 @@ void create_screen_main() {
                     lv_obj_set_pos(obj, 113, 30);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_img_set_src(obj, &img_second_hand);
-                    lv_obj_set_style_transform_pivot_x(obj, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_transform_pivot_y(obj, 91, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_transform_pivot_x(obj, 3.5, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_transform_pivot_y(obj, 90, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_transform_rotation(obj, 1800, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
@@ -98,7 +98,7 @@ void create_screen_main() {
                     objects.b1_label = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "B1");
+                    lv_label_set_text(obj, "\uf013");
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
             }
@@ -107,10 +107,10 @@ void create_screen_main() {
             // wi_fi_bli
             lv_obj_t *obj = lv_label_create(parent_obj);
             objects.wi_fi_bli = obj;
-            lv_obj_set_pos(obj, 285, 4);
+            lv_obj_set_pos(obj, 293, 4);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_long_mode(obj, LV_LABEL_LONG_CLIP);
-            lv_label_set_text(obj, "WIFI");
+            lv_label_set_text(obj, "\uf1eb");
             lv_obj_set_style_text_color(obj, lv_color_hex(0xffffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
