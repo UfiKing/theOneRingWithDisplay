@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <lvgl.h>
 #include "ui/ui.h"
-#include "preferences.h"
+#include "Preferences.h"
 
 char wifi_ssid[32];
 char wifi_password[32];

@@ -1,7 +1,7 @@
 /*Read the touchpad*/
 #pragma once
 #include <lvgl.h>
-#include "c_touch\CST820.h"
+#include "c_touch/CST820.h"
 
 #ifdef RESISTIVE_TOUCH
 // Touch Screen pins
