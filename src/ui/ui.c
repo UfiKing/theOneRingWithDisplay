@@ -47,10 +47,14 @@ void loadScreen(enum ScreensEnum screenId) {
 void ui_init() {
     create_screens();
     loadScreen(SCREEN_ID_MAIN);
+
 }
 
 void ui_tick() {
     tick_screen(currentScreen);
 }
 
+void action_switch_screen(lv_event_t *e) {
+   // loadScreen(SCREEN_ID_AMULET_SCREEN);
+}
 #endif

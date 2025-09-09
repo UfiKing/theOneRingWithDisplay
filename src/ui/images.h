@@ -7,11 +7,10 @@
 extern "C" {
 #endif
 
-extern const lv_img_dsc_t img_analog_clock_template;
-extern const lv_img_dsc_t img_analog_middle_template;
-extern const lv_img_dsc_t img_hour_hand;
-extern const lv_img_dsc_t img_minute_hand;
-extern const lv_img_dsc_t img_second_hand;
+extern const lv_img_dsc_t img_amulet;
+extern const lv_img_dsc_t img_vegova;
+extern const lv_img_dsc_t img_spellcaster;
+extern const lv_img_dsc_t img_amulet_bigger;
 
 #ifndef EXT_IMG_DESC_T
 #define EXT_IMG_DESC_T
@@ -21,7 +20,7 @@ typedef struct _ext_img_desc_t {
 } ext_img_desc_t;
 #endif
 
-extern const ext_img_desc_t images[5];
+extern const ext_img_desc_t images[4];
 
 
 #ifdef __cplusplus

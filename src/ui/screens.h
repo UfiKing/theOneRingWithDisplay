@@ -9,34 +9,37 @@ extern "C" {
 
 typedef struct _objects_t {
     lv_obj_t *main;
-    lv_obj_t *nastavitve;
-    lv_obj_t *img_h_hand;
-    lv_obj_t *img_m_hand;
-    lv_obj_t *img_s_hand;
-    lv_obj_t *b1;
-    lv_obj_t *b1_label;
-    lv_obj_t *wi_fi_bli;
-    lv_obj_t *ssid_label;
-    lv_obj_t *ssid_pass_label;
-    lv_obj_t *kbd;
-    lv_obj_t *b_connect;
-    lv_obj_t *b_back;
-    lv_obj_t *tb_ssid_pass;
-    lv_obj_t *tb_ssid_text;
+    lv_obj_t *amulet_screen;
+    lv_obj_t *vegova_screen;
+    lv_obj_t *spellcaster_screen;
+    lv_obj_t *label1;
+    lv_obj_t *gumb1;
+    lv_obj_t *amulet_logo;
+    lv_obj_t *vegova_logo;
+    lv_obj_t *spellcaster_logo;
+    lv_obj_t *spellcaster_text;
 } objects_t;
 
 extern objects_t objects;
 
 enum ScreensEnum {
     SCREEN_ID_MAIN = 1,
-    SCREEN_ID_NASTAVITVE = 2,
+    SCREEN_ID_AMULET_SCREEN = 2,
+    SCREEN_ID_VEGOVA_SCREEN = 3,
+    SCREEN_ID_SPELLCASTER_SCREEN = 4,
 };
 
 void create_screen_main();
 void tick_screen_main();
 
-void create_screen_nastavitve();
-void tick_screen_nastavitve();
+void create_screen_amulet_screen();
+void tick_screen_amulet_screen();
+
+void create_screen_vegova_screen();
+void tick_screen_vegova_screen();
+
+void create_screen_spellcaster_screen();
+void tick_screen_spellcaster_screen();
 
 void tick_screen_by_id(enum ScreensEnum screenId);
 void tick_screen(int screen_index);
