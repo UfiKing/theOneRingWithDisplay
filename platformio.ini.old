@@ -32,43 +32,16 @@ build_flags =
 	-DUSER_SETUP_LOADED
 	-DLV_USE_DEMO_KEYPAD_AND_ENCODER
 	-DUSE_HSPI_PORT
-	-DTFT_HOR_RES=320
-	-DTFT_VER_RES=240
+	-DTFT_HOR_RES=240
+	-DTFT_VER_RES=320
 build_src_filter = 
 	+<*>
 	-<.git/>
 	-<../eez studio/*>
 
-[env:esp322432S028R]
-lib_deps = 
-	${env.lib_deps}
-	touchscreen=https://github.com/PaulStoffregen/XPT2046_Touchscreen.git#v1.4
-	fastled/FastLED@^3.10.2
-build_flags = 
-	${env.build_flags}
-	-DST7789_DRIVER
-	-DTFT_INVERSION_OFF
-	-DTFT_RGB_ORDER=TFT_BGR
-	-DTFT_MISO=12
-	-DTFT_MOSI=13
-	-DTFT_SCLK=14
-	-DTFT_CS=15
-	-DTFT_DC=2
-	-DTFT_RST=-1
-	-DTFT_BL=21
-	-DTFT_BACKLIGHT_ON=HIGH
-	-DSPI_FREQUENCY=55000000
-	-DSPI_READ_FREQUENCY=20000000
-	-DSPI_TOUCH_FREQUENCY=2500000
-	-DRESISTIVE_TOUCH
-build_src_filter = 
-	${env.build_src_filter}
-	+<../.pio/libdeps/${this.__env__}/lvgl/demos>
-
 [env:jc2432W328C]
 lib_deps = 
 	${env.lib_deps}
-	fastled/FastLED@^3.10.2
 build_flags = 
 	${env.build_flags}
 	-DLV_CONF_SKIP
@@ -86,3 +59,5 @@ build_flags =
 	-DLED_G=16
 	-DLED_B=17
 	-DCAPACITIVE_TOUCH
+
+
