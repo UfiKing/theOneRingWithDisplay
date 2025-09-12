@@ -118,13 +118,37 @@ void action_spin(lv_event_t * e){
   allOnB = false;
   allOffB = true;
 }
-void action_lava_v1(lv_event_t * e){}
-void action_lava_v2(lv_event_t * e){}
+void action_lava_v1(lv_event_t * e){
+  breatheB = false;
+  spinB = false;
+  lavaV1B = true;
+  lavaV2B = false;
+  lavaV3B = false;
+  flickerV1B = false;
+  allOnB = false;
+  allOffB = true;
+}
+void action_lava_v2(lv_event_t * e){
+  breatheB = false;
+  spinB = false;
+  lavaV1B = false;
+  lavaV2B = true;
+  lavaV3B = false;
+  flickerV1B = false;
+  allOnB = false;
+  allOffB = true;
+}
 void action_lava_v3(lv_event_t * e){}
 void action_flicker_v1(lv_event_t * e){}
-void action_back(lv_event_t * e){}
-void action_next_screen(lv_event_t * e){}
-void action_previous_screen(lv_event_t * e){}
+void action_back(lv_event_t * e){
+  loadScreen(SCREEN_ID_MAIN);
+}
+void action_next_screen(lv_event_t * e){
+  loadScreen(SCREEN_ID_RING_SCREEN2);
+}
+void action_previous_screen(lv_event_t * e){
+  loadScreen(SCREEN_ID_RING_SCREEN);
+}
 
 
 

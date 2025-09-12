@@ -14,7 +14,7 @@
 #define TFT_VER_RES 320
 
 /*LVGL draw into this buffer, 1/10 screen size usually works well. The size is in bytes*/
-#define DRAW_BUF_SIZE (TFT_HOR_RES * TFT_VER_RES / 10 * (LV_COLOR_DEPTH / 8))
+#define DRAW_BUF_SIZE (TFT_HOR_RES * TFT_VER_RES / 5 * (LV_COLOR_DEPTH / 8))
 
 
 #if LV_USE_LOG != 0
@@ -55,7 +55,7 @@ void setup() {
   LVGL_Arduino += String('V') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
   Serial.begin(115200);
   Serial.println(LVGL_Arduino);
-
+  randomSeed(analogRead(0));
   //Initialise LVGL GUI
   lv_init();
 

@@ -126,6 +126,50 @@ void breathe(CRGB leds[], uint16_t delayMS){
   }
 }
 
+void lavaV1(CRGB leds[], uint16_t delayMS){
+  for(uint8_t i = 0; i < LED_COUNT; i++){
+    long rand = random();
+    leds[i] = CRGB(rand & 0b11111111, (rand >> 8) & 0b11111111, (rand >> 16) & 0b11111111);
+  }
+  FastLED.show();
+  delay(delayMS);
+}
+
+void lavaV2(CRGB leds[], uint16_t delayMS, uint8_t steps, uint32_t repetitions){
+  uint8_t targets[LED_COUNT][3];
+  for(uint8_t i = 0; i < LED_COUNT; i++){
+    targets[i][0] = random(256);
+    targets[i][1] = targets[i][0];
+    targets[i][2] = random(256);
+    leds[i] = CRGB(targets[i][1], targets[i][1], targets[i][1]);
+  }
+  FastLED.show();
+  for (uint32_t x = 0; x < repetitions; x++) {
+    for (uint8_t i = 0; i < LED_COUNT; i++) {
+      targets[i][0] = targets[i][1];
+      targets[i][2] = random(256);
+      leds[i] = CRGB(targets[i][1], targets[i][1], targets[i][1]);
+    }
+    FastLED.show();
+    for (uint8_t j = 0; j < steps; j++) {
+      for (uint8_t i = 0; i < LED_COUNT; i++) {
+        int16_t change = targets[i][2] - targets[i][0];
+        change = change / steps;
+        targets[i][1] += change;
+        leds[i] = CRGB(targets[i][1], targets[i][1], targets[i][1]);
+      }
+      FastLED.show();
+      if(lavaV2B == false){
+        break;
+      }
+      delay(delayMS);
+    }
+    if(lavaV2B == false){
+        break;
+    }
+  }
+}
+
 void lightsTask(void* pvParamaters){
   CRGB leds[NUM_LEDS + 6];
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
@@ -139,6 +183,10 @@ void lightsTask(void* pvParamaters){
       breathe(leds, 10);
     }else if(spinB){
       spin(leds);
+    }else if(lavaV1B){
+      lavaV1(leds, 100);
+    }else if(lavaV2B){
+      lavaV2(leds, 60, 10, 0-1);
     }else{
       allOff(leds);
     }

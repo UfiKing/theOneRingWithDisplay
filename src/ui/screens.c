@@ -15,7 +15,6 @@ lv_obj_t *tick_value_change_obj;
 uint32_t active_theme_index = 0;
 
 void create_screen_main() {
-
     lv_obj_t *obj = lv_obj_create(0);
     objects.main = obj;
     lv_obj_set_pos(obj, 0, 0);
@@ -241,8 +240,9 @@ void create_screen_ring_screen() {
         }
         {
             lv_obj_t *obj = lv_button_create(parent_obj);
-            lv_obj_set_pos(obj, 205, 206);
-            lv_obj_set_size(obj, 100, 22);
+            lv_obj_set_pos(obj, 205, 194);
+            lv_obj_set_size(obj, 100, 34);
+            lv_obj_add_event_cb(obj, action_next_screen, LV_EVENT_CLICKED, (void *)0);
             {
                 lv_obj_t *parent_obj = obj;
                 {
@@ -295,8 +295,8 @@ void create_screen_ring_screen() {
         }
         {
             lv_obj_t *obj = lv_button_create(parent_obj);
-            lv_obj_set_pos(obj, 18, 203);
-            lv_obj_set_size(obj, 100, 22);
+            lv_obj_set_pos(obj, 18, 194);
+            lv_obj_set_size(obj, 100, 31);
             lv_obj_add_event_cb(obj, action_back, LV_EVENT_CLICKED, (void *)0);
             {
                 lv_obj_t *parent_obj = obj;
@@ -406,8 +406,9 @@ void create_screen_ring_screen2() {
         }
         {
             lv_obj_t *obj = lv_button_create(parent_obj);
-            lv_obj_set_pos(obj, 17, 206);
-            lv_obj_set_size(obj, 138, 22);
+            lv_obj_set_pos(obj, 17, 195);
+            lv_obj_set_size(obj, 138, 30);
+            lv_obj_add_event_cb(obj, action_previous_screen, LV_EVENT_CLICKED, (void *)0);
             {
                 lv_obj_t *parent_obj = obj;
                 {
@@ -416,7 +417,6 @@ void create_screen_ring_screen2() {
                     objects.previous_screen_button = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_obj_add_event_cb(obj, action_previous_screen, LV_EVENT_CLICKED, (void *)0);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_label_set_text(obj, "Previous Screen");
                 }
